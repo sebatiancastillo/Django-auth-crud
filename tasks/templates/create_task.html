@@ -1,0 +1,18 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-4 ">
+          <form action="/tasks/create/" method="POST" novalidate>  
+            <h1 class="text-center display-3 py-5">Crear tarea</h1>
+                {{ form.non_field_errors }} <!--para errores no asociados a un campo específico-->
+                {% csrf_token %} <!-- para protección contra CSRF -->
+                {{ form.as_p }} <!--para renderizar el formulario como párrafos-->
+                <button class="btn btn-primary" type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+  

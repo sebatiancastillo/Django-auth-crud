@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <main class="container py-5">
+        <section class="card card-body">
+         <h1 class="display-1 text-center">Bienvenido app django</h1>
+         <p>Esta es la página de inicio de la aplicación de gestión de tareas.</p>
+        <div>
+         <a class="btn btn-primary" href="/signin/">
+            iniciar sesión
+         </a>
+         <a class="btn btn-secondary" href="/signup/">
+            registrarse
+         </a>
+        </div>
+        
+        </section>
+    </main>
+  {% endblock %}
+   
+</body>
+</html>
+
+

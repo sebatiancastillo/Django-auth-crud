@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat de atención</title>
+<style>
+  body {font-family: Arial, sans-serif;}
+  .chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .chat-header {
+    background: #28a745;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+  .chat-body { padding: 10px; }
+  .agent {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .agent img {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .chat-btn {
+    display: block;
+    background: #25D366;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .chat-btn:hover { background: #20b858; }
+
+  /* Formulario */
+  .chat-form {
+    display: none;
+    padding: 10px;
+  }
+  .chat-form input, .chat-form textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .send-btn {
+    background: #25D366;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .back-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    float: left;
+  }
+</style>
+</head>
+<body>
+
+<div class="chat-widget">
+  <div class="chat-header">Nuestro equipo de atención al cliente está aquí para responder a sus preguntas.</div>
+
+  <div class="chat-body" id="agent-list">
+    <div class="agent" onclick="openForm('Isabel', '573001111111')">
+      <img src="isabel.png" alt="Isabel">
+      <div><strong>Isabel</strong><br><span>Disponible</span></div>
+    </div>
+    <div class="agent" onclick="openForm('Robin', '573002222222')">
+      <img src="robin.png" alt="Robin">
+      <div><strong>Robin</strong><br><span>Disponible</span></div>
+    </div>
+    <div class="agent" onclick="openForm('Omaira', '573003333333')">
+      <img src="omaira.png" alt="Omaira">
+      <div><strong>Omaira</strong><br><span>Disponible</span></div>
+    </div>
+  </div>
+
+  <div class="chat-form" id="chat-form">
+    <button class="back-btn" onclick="backToAgents()">←</button>
+    <p>Escribe tu número de teléfono y tu pregunta:</p>
+    <input type="text" id="userPhone" placeholder="Tu número de WhatsApp">
+    <textarea id="userMessage" placeholder="Escribe tu pregunta..."></textarea>
+    <button class="send-btn" onclick="sendToWhatsApp()">Enviar a WhatsApp</button>
+  </div>
+
+  <a href="#" class="chat-btn">💬 Hola, ¿Necesitas ayuda?</a>
+</div>
+
+<script>
+  let selectedAgent = "";
+  let selectedPhone = "";
+
+  function openForm(agent, phone) {
+    selectedAgent = agent;
+    selectedPhone = phone;
+    document.getElementById("agent-list").style.display = "none";
+    document.getElementById("chat-form").style.display = "block";
+  }
+
+  function backToAgents() {
+    document.getElementById("chat-form").style.display = "none";
+    document.getElementById("agent-list").style.display = "block";
+  }
+
+  function sendToWhatsApp() {
+    const phone = document.getElementById("userPhone").value;
+    const message = document.getElementById("userMessage").value;
+    if (!phone || !message) {
+      alert("Por favor, completa ambos campos.");
+      return;
+    }
+    const encodedMsg = encodeURIComponent(`Hola ${selectedAgent}, soy ${phone}. ${message}`);
+    window.open(`https://wa.me/${selectedPhone}?text=${encodedMsg}`, "_blank");
+  }
+</script>
+
+</body>
+</html>
