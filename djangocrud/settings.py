@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 import dj_database_url
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -83,12 +84,12 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 
 # Configuración de la base de datos utilizando dj_database_url para facilitar la configuración en diferentes entornos
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600
-    )
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
+            conn_max_age=600,  # Optional: enable persistent connections
+            ssl_require=True,  # Optional: require SSL for certain databases
+        )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -126,7 +127,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/' 
+STATIC_URL = '/static/' 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
